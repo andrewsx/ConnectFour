@@ -20,14 +20,14 @@ public class Board {
 	 * Returns the row count
 	 * @return
 	 */
-	protected int getRow() {
+	public int getRow() {
 		return row;
 	}
 	/**
 	 * Returns the column count
 	 * @return
 	 */
-	protected int getCol() {
+	public int getCol() {
 		return col;
 	}
 	
@@ -38,7 +38,7 @@ public class Board {
 	 * @param c Player color
 	 * @return count of cells containing the player's color
 	 */
-	protected int checkWinHorizontal(int row, int col, Color c) {
+	public int checkWinHorizontal(int row, int col, Color c) {
 		int count = 0;
 		int colNumLeft = col - 1;
 		int colNumRight = col + 1;
@@ -60,7 +60,7 @@ public class Board {
 	 * @param c Player color
 	 * @return count of cells containing the player's color
 	 */
-	protected int checkWinVertical(int row, int col, Color c) {
+	public int checkWinVertical(int row, int col, Color c) {
 		int count = 0;
 		int rowNum = row + 1;
 		while (rowNum < this.row) {
@@ -81,7 +81,7 @@ public class Board {
 	 * @param c Player color
 	 * @return count of cells containing the player's color
 	 */
-	protected int checkWinDiagonalUpperLeftToBottomRight(int row, int col, Color c) {
+	public int checkWinDiagonalUpperLeftToBottomRight(int row, int col, Color c) {
 		int count = 0;
 		int rowNum = row - 1;
 		int colNum = col - 1;
@@ -109,7 +109,7 @@ public class Board {
 	 * @param c Player color
 	 * @return count of cells containing the player's color
 	 */
-	protected int checkWinDiagonalBottomLeftToUpperRight(int row, int col, Color c) {
+	public int checkWinDiagonalBottomLeftToUpperRight(int row, int col, Color c) {
 		int count = 0;
 		int rowNum = row + 1;
 		int colNum = col - 1;
@@ -135,7 +135,7 @@ public class Board {
 	 * @return true if board is full
 	 */
 	
-	protected boolean checkBoardFull() {
+	public boolean checkBoardFull() {
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < col; j++) {
 				if (board[i][j] == null) {
@@ -152,7 +152,7 @@ public class Board {
 	 * @param col column index
 	 * @param c player's color
 	 */
-	protected void setColor(int row, int col, Color c) {
+	public void setColor(int row, int col, Color c) {
 		if (c == null) {
 			throw new NullPointerException("Color cannot be null");
 		} 
@@ -168,7 +168,7 @@ public class Board {
 	 * @param col column index
 	 * @return Color of the Grid Location
 	 */
-	protected Color getColor(int row, int col) {
+	public Color getColor(int row, int col) {
 		if (row < 0 || row >= this.row || col < 0 || col >= this.col) {
 			throw new IllegalArgumentException("Row or column beyond grid size.");
 		} 
@@ -180,7 +180,7 @@ public class Board {
 	 * @param col column index
 	 * @return row index containing empty cell
 	 */
-	protected int getEmptyRowCellForColumn(int col) {
+	public int getEmptyRowCellForColumn(int col) {
 		if (col < 0 || col >= this.col) {
 			throw new IllegalArgumentException("Row or column beyond grid size.");
 		}
@@ -197,7 +197,7 @@ public class Board {
 	/**
 	 * Resets the grid to a new one with spaces containing null
 	 */
-	protected void resetGrid() {
+	public void resetGrid() {
 		board = new Color[row][col];
 	}
 	

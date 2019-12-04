@@ -31,6 +31,20 @@ public class ConnectFour implements IConnectFour {
 		
 	
 	}
+	
+	public IPlayer getPlayer() {
+		return currentPlayer;
+	}
+	
+	public boolean getMode() {
+		return modeAI;
+	}
+	public Board getBoard() {
+		return board;
+	}
+	
+	
+	
 	/**
 	 * Returns instance of the singleton object 
 	 * @return singleton
@@ -46,11 +60,12 @@ public class ConnectFour implements IConnectFour {
 	 */
 	@Override
 	public boolean addObserver(IObserver observer) {
-		try {
-			return observers.add(observer);
-		} catch (Exception e) {
-			return false;
+		if (observer == null) {
+			throw new IllegalArgumentException();
 		}
+		
+		return observers.add(observer);
+		
 	}
 	/**
 	 * @inheritDoc 
@@ -102,6 +117,8 @@ public class ConnectFour implements IConnectFour {
 	 */
 	@Override
 	public void notifyPlayerWon(Color c) {
+		if (c == null)
+			throw new IllegalArgumentException();
 		for (IObserver obs: observers) {
 			obs.declareWinner(c);
 		}
@@ -111,6 +128,8 @@ public class ConnectFour implements IConnectFour {
 	 */
 	@Override
 	public void notifyPlayersSelected(String s) {
+		if (s == null)
+			throw new IllegalArgumentException();
 		for (IObserver obs : observers) {
 			obs.playersSelected(s);
 		}
@@ -172,7 +191,9 @@ public class ConnectFour implements IConnectFour {
 	 */
 	@Override
 	public boolean testColumnForEmptyCell(int column) {
-		checkIfBoardFull();
+		if (checkIfBoardFull()) {
+			return true;
+		}
 		int row = board.getEmptyRowCellForColumn(column);
 		
 		if (row == -1) {
@@ -183,7 +204,6 @@ public class ConnectFour implements IConnectFour {
 			if (!checkIfWin(row, column) && !modeAI) {
 				switchPlayer();  
 			} else if (modeAI && !checkIfWin(row, column) && currentPlayer.getPlayerType() == PlayerType.HUMAN) {
-				System.out.println(modeAI);
 				switchPlayer();
 				computerMakeMove();
 			} else {
@@ -211,9 +231,11 @@ public class ConnectFour implements IConnectFour {
 	 *  leading to a winning game. If there isn't any, then it randomly selects a column to insert if there is an open spot.
 	 */
 	private void computerMakeMove() {
-		checkIfBoardFull();
+		if (checkIfBoardFull()) {
+			return;
+		}
 		int numCol = board.getCol();
-		for (int col = 0 ; col < numCol; col++) {
+		for (int col = 0; col < numCol; col++) {
 			int row = board.getEmptyRowCellForColumn(col);
 			if (row != -1 && !checkIfWin(row, col)) {
 				emptyCols.add(new Point(row, col));
