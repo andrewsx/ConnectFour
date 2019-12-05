@@ -172,6 +172,7 @@ public class ConnectFourTest {
 		}
 		Assertions.assertTrue(model.checkIfWin(2,0));
 	}
+
 	@Test
 	public void testComputerMakeMove() {
 		final ConnectFour model = ConnectFour.getInstance();
