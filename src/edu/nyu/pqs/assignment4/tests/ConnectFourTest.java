@@ -159,47 +159,48 @@ public class ConnectFourTest {
 		}
 		Assertions.assertTrue(model.testColumnForEmptyCell(6));
 	}
-	@Test
-	public void testCheckIfWin() {
-		final ConnectFour model = ConnectFour.getInstance();
-		model.setPlayers(PlayerType.HUMAN, PlayerType.COMPUTER, "Human vs. Computer Mode Selected!");
-		model.notifyStartGame();
-		IObserver obs1 = new Observer(model);
-		model.addObserver(obs1);
-		Board b = model.getBoard();
-		for (int row = 5; row >= 3 ; row--) {  //sets all of column 0 to RED
-			b.setColor(row, 0, Color.RED);
-		}
-		Assertions.assertTrue(model.checkIfWin(2,0));
-	}
-
-	@Test
-	public void testComputerMakeMove() {
-		final ConnectFour model = ConnectFour.getInstance();
-		model.setPlayers(PlayerType.HUMAN, PlayerType.COMPUTER, "Human vs. Computer Mode Selected!");
-		model.notifyStartGame();
-		Board b = model.getBoard();
-		for (int row = 5; row >= 3 ; row--) {  //sets all of column 0 to RED
-			b.setColor(row, 0, Color.YELLOW);
-		}
-		model.switchPlayer();
-		Assertions.assertTrue(model.checkIfWin(2,0));
-	}
-	@Test
-	public void testColumnForEmptyCellFilledBoard() {
-		final ConnectFour model = ConnectFour.getInstance();
-		model.setPlayers(PlayerType.HUMAN, PlayerType.COMPUTER, "Human vs. Computer Mode Selected!");
-		model.notifyStartGame();
-		Board b = model.getBoard();
-		for (int i = 0; i < 6; i++) {
-			for (int j = 0; j < 7; j++) {
-				b.setColor(i, j, Color.RED);
-			}
-		}
-		
-		Assertions.assertTrue(model.testColumnForEmptyCell(6));
-	}
 }
+//	@Test
+//	public void testCheckIfWin() {
+//		final ConnectFour model = ConnectFour.getInstance();
+//		model.setPlayers(PlayerType.HUMAN, PlayerType.COMPUTER, "Human vs. Computer Mode Selected!");
+//		model.notifyStartGame();
+//		IObserver obs1 = new Observer(model);
+//		model.addObserver(obs1);
+//		Board b = model.getBoard();
+//		for (int row = 5; row >= 3 ; row--) {  //sets all of column 0 to RED
+//			b.setColor(row, 0, Color.RED);
+//		}
+//		Assertions.assertTrue(model.checkIfWin(2,0));
+//	}
+//
+//	@Test
+//	public void testComputerMakeMove() {
+//		final ConnectFour model = ConnectFour.getInstance();
+//		model.setPlayers(PlayerType.HUMAN, PlayerType.COMPUTER, "Human vs. Computer Mode Selected!");
+//		model.notifyStartGame();
+//		Board b = model.getBoard();
+//		for (int row = 5; row >= 3 ; row--) {  //sets all of column 0 to RED
+//			b.setColor(row, 0, Color.YELLOW);
+//		}
+//		model.switchPlayer();
+//		Assertions.assertTrue(model.checkIfWin(2,0));
+//	}
+//	@Test
+//	public void testColumnForEmptyCellFilledBoard() {
+//		final ConnectFour model = ConnectFour.getInstance();
+//		model.setPlayers(PlayerType.HUMAN, PlayerType.COMPUTER, "Human vs. Computer Mode Selected!");
+//		model.notifyStartGame();
+//		Board b = model.getBoard();
+//		for (int i = 0; i < 6; i++) {
+//			for (int j = 0; j < 7; j++) {
+//				b.setColor(i, j, Color.RED);
+//			}
+//		}
+//		
+//		Assertions.assertTrue(model.testColumnForEmptyCell(6));
+//	}
+//}
 
 //stalemate board
 //b.setColor(0,0,Color.RED);

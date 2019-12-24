@@ -201,9 +201,9 @@ public class ConnectFour implements IConnectFour {
 		} else {
 			board.setColor(row, column, currentPlayer.getColor());
 			notifyColumnRowSelected(row, column);
-			if (!checkIfWin(row, column) && !modeAI) {
+			if (!checkIfWin(row, column, currentPlayer.getColor()) && !modeAI) {
 				switchPlayer();  
-			} else if (modeAI && !checkIfWin(row, column) && currentPlayer.getPlayerType() == PlayerType.HUMAN) {
+			} else if (modeAI && !checkIfWin(row, column, currentPlayer.getColor()) && currentPlayer.getPlayerType() == PlayerType.HUMAN) {
 				switchPlayer();
 				computerMakeMove();
 			} else {
@@ -235,14 +235,28 @@ public class ConnectFour implements IConnectFour {
 			return;
 		}
 		int numCol = board.getCol();
+		Color otherPlayerColor = currentPlayer.getColor() == Color.RED ? Color.YELLOW : Color.RED;
+		
+		//first check if opposing player is about to win. If so, stop them.
 		for (int col = 0; col < numCol; col++) {
 			int row = board.getEmptyRowCellForColumn(col);
-			if (row != -1 && !checkIfWin(row, col)) {
-				emptyCols.add(new Point(row, col));
-			} else if (row != -1 && checkIfWin(row, col)) {
+			if (row != -1 && checkIfWin(row, col, otherPlayerColor)) {
 				board.setColor(row, col, currentPlayer.getColor());
 				notifyColumnRowSelected(row, col);
-				notifyPlayerWon(currentPlayer.getColor());
+				switchPlayer();
+				return;
+			}
+		}
+		for (int col = 0; col < numCol; col++) {
+			Color c = currentPlayer.getColor();
+			int row = board.getEmptyRowCellForColumn(col);
+			
+			if (row != -1 && !checkIfWin(row, col, c)) {
+				emptyCols.add(new Point(row, col));
+			} else if (row != -1 && checkIfWin(row, col,c)) {
+				board.setColor(row, col, c);
+				notifyColumnRowSelected(row, col);
+				notifyPlayerWon(c);
 				return;
 			}
 		}
@@ -257,15 +271,16 @@ public class ConnectFour implements IConnectFour {
 	 * 
 	 */
 	@Override
-	public boolean checkIfWin(int row, int col) {
-		Color currentPlayerColor = currentPlayer.getColor();
-		int horizontalNum = board.checkWinHorizontal(row, col, currentPlayerColor);
-		int verticalNum = board.checkWinVertical(row, col, currentPlayerColor);
-		int diagonalUpperToBottomNum = board.checkWinDiagonalUpperLeftToBottomRight(row, col, currentPlayerColor);
-		int diagonalBottomToUpperNum = board.checkWinDiagonalBottomLeftToUpperRight(row, col, currentPlayerColor);
+	public boolean checkIfWin(int row, int col, Color c) {
+		int horizontalNum = board.checkWinHorizontal(row, col, c);
+		int verticalNum = board.checkWinVertical(row, col, c);
+		int diagonalUpperToBottomNum = board.checkWinDiagonalUpperLeftToBottomRight(row, col, c);
+		int diagonalBottomToUpperNum = board.checkWinDiagonalBottomLeftToUpperRight(row, col, c);
 		if (horizontalNum >= 3 || verticalNum >= 3 || diagonalUpperToBottomNum >= 3 || diagonalBottomToUpperNum >= 3) {
 			return true;
 		}
 		return false;
 	}
 }
+
+

@@ -88,7 +88,7 @@ public interface IConnectFour {
 	 * @param col index
 	 * @return true if the winning conditions are satisfied, otherwise false
 	 */
-	public boolean checkIfWin(int row, int col);
+	public boolean checkIfWin(int row, int col, Color c);
 	
 	
 }
